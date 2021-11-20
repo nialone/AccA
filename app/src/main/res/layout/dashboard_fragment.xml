@@ -206,28 +206,6 @@
                                 android:text="..." />
                         </LinearLayout>
 
-                        <!-- Battery Temperature -->
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content"
-                            android:layout_width="match_parent">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:text="@string/info_temperature"
-                                android:textSize="@dimen/label_text"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:id="@+id/dash_batteryTemperature_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:text="..." />
-                        </LinearLayout>
-
                         <!-- Battery Voltage -->
                         <LinearLayout
                             android:orientation="horizontal"
@@ -244,6 +222,50 @@
 
                             <TextView
                                 android:id="@+id/dash_batteryVoltage_textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="..." />
+                        </LinearLayout>
+
+                        <!-- Battery Wates -->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:text="@string/info_power"
+                                android:textSize="@dimen/label_text"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:id="@+id/dash_batteryPower_textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="..." />
+                        </LinearLayout>
+
+                        <!-- Battery Temperature -->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:text="@string/info_temperature"
+                                android:textSize="@dimen/label_text"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:id="@+id/dash_batteryTemperature_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="end"

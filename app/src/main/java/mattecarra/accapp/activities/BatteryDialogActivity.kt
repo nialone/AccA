@@ -92,26 +92,32 @@ class BatteryDialogActivity : ScopedAppActivity()
 
         //-----------------------------------------
 
-        fun updateTextStatusACC()
-        {
-            content.wdtDaemonAccBtn.text = if (!isAccdInstalled) getString(R.string.acc_installation_failed_title)
-            else if (isAccdRunning) getString(R.string.acc_daemon_status_running)
-            else getString(R.string.acc_daemon_status_not_running)
-        }
-
         fun updateTextStartWidget()
         {
             content.wdtStartWidgetBtn.text =
             if (manualStop) getString(R.string.qwa_start) else getString(R.string.qwa_stop)
-            //else getString(R.string.acc_daemon_status_not_running)
         }
 
-        launch {
-            isAccdRunning = Acc.instance.isAccdRunning()
-            isAccdInstalled = Acc.instance.getAccVersion() != null
-            updateTextStatusACC()
+        fun updateStatusACC()
+        {
+            launch {
+                content.wdtDaemonAccBtn.isEnabled = false
+                content.wdtDaemonAccBtn.text = getString(R.string.acc_daemon_status_reading_status)
+
+                isAccdRunning = Acc.instance.isAccdRunning()
+                isAccdInstalled = Acc.instance.getAccVersion() != null
+
+                content.wdtDaemonAccBtn.text = if (isAccdInstalled)
+                {
+                    content.wdtDaemonAccBtn.isEnabled = true
+                    if (isAccdRunning) getString(R.string.acc_daemon_status_running)
+                    else getString(R.string.acc_daemon_status_not_running)
+                }
+                else getString(R.string.acc_installation_failed_title)
+            }
         }
 
+        updateStatusACC()
         updateTextStartWidget()
 
         //---------------------------------------------------------------------------------
@@ -158,13 +164,13 @@ class BatteryDialogActivity : ScopedAppActivity()
         //---------------------------------------------------------------------------------
 
         content.wdtDaemonAccBtn.setOnClickListener {
-            LogExt().d(javaClass.simpleName, "onClick_ReverseDaemonAcc")
+            LogExt().d(javaClass.simpleName, "onClick_ReverseDaemonAcc: ${if(isAccdRunning) "Stoping AccDaemon.." else "Starting AccDaemon.." }")
 
             launch {
-                //isAccdRunning = Acc.instance.isAccdRunning()
+                content.wdtDaemonAccBtn.isEnabled = false
+                content.wdtDaemonAccBtn.text = getString(R.string.acc_daemon_status_reading_status)
                 if (isAccdRunning) Acc.instance.abcStopDaemon() else Acc.instance.abcStartDaemon()
-                //runOnUiThread( Runnable { updateTextStatusACC() })  // there is no synchronization
-                finish()
+                updateStatusACC()
             }
         }
 
@@ -289,6 +295,7 @@ class BatteryDialogActivity : ScopedAppActivity()
                     .putBoolean(swidgetId + WIDGET_SCURRENT, bind.showCurrentChk.isChecked)
                     .putBoolean(swidgetId + WIDGET_STEMP, bind.showTemperatureChk.isChecked)
                     .putBoolean(swidgetId + WIDGET_SVOLT, bind.showVoltageChk.isChecked)
+                    .putBoolean(swidgetId + WIDGET_SPOWER, bind.showPowerChk.isChecked)
                     .putBoolean(swidgetId + WIDGET_SPROFILE, bind.showProfileChk.isChecked)
                     .apply()
 
@@ -302,6 +309,7 @@ class BatteryDialogActivity : ScopedAppActivity()
                 bind.showCurrentChk.setOnCheckedChangeListener { _, isChecked -> bind.sampleWdt.chargingLine.isVisible = isChecked }
                 bind.showTemperatureChk.setOnCheckedChangeListener { _, isChecked -> bind.sampleWdt.temperLine.isVisible = isChecked }
                 bind.showVoltageChk.setOnCheckedChangeListener { _, isChecked -> bind.sampleWdt.voltageLine.isVisible = isChecked }
+                bind.showPowerChk.setOnCheckedChangeListener { _, isChecked -> bind.sampleWdt.powerLine.isVisible = isChecked }
                 bind.showProfileChk.setOnCheckedChangeListener { _, isChecked -> bind.sampleWdt.profileLine.isVisible = isChecked }
 
                 bind.showLabelChk.setOnCheckedChangeListener { _, isChecked ->
@@ -310,6 +318,7 @@ class BatteryDialogActivity : ScopedAppActivity()
                     bind.sampleWdt.chargingLabel.isVisible = isChecked
                     bind.sampleWdt.temperLabel.isVisible = isChecked
                     bind.sampleWdt.voltageLabel.isVisible = isChecked
+                    bind.sampleWdt.powerLabel.isVisible = isChecked
                     bind.sampleWdt.profileLabel.isVisible = isChecked
                 }
 
@@ -318,6 +327,7 @@ class BatteryDialogActivity : ScopedAppActivity()
                     bind.sampleWdt.chargingLabel.text= if (isChecked) "Ⓒ:" else getString(R.string.info_charging_speed)
                     bind.sampleWdt.temperLabel.text= if (isChecked) "Ⓣ:" else getString(R.string.info_temperature)
                     bind.sampleWdt.voltageLabel.text = if (isChecked) "Ⓥ:" else getString(R.string.info_voltage)
+                    bind.sampleWdt.powerLabel.text = if (isChecked) "Ⓦ:" else getString(R.string.info_power)
                     bind.sampleWdt.profileLabel.text= if (isChecked) "Ⓟ:" else getString(R.string.info_profile)
                 }
 
@@ -337,6 +347,8 @@ class BatteryDialogActivity : ScopedAppActivity()
                         bind.sampleWdt.temperOut.textSize = textSize.toFloat()
                         bind.sampleWdt.voltageLabel.textSize = textSize.toFloat()
                         bind.sampleWdt.voltageOut.textSize = textSize.toFloat()
+                        bind.sampleWdt.powerLabel.textSize = textSize.toFloat()
+                        bind.sampleWdt.powerOut.textSize = textSize.toFloat()
                         bind.sampleWdt.profileLabel.textSize = textSize.toFloat()
                         bind.sampleWdt.profileOut.textSize = textSize.toFloat()
 
@@ -397,6 +409,7 @@ class BatteryDialogActivity : ScopedAppActivity()
                         bind.sampleWdt.voltageLabel.setTextColor(color)
                         bind.sampleWdt.voltageOut.setTextColor(color)
                         bind.sampleWdt.profileLabel.setTextColor(color)
+                        bind.sampleWdt.powerLabel.setTextColor(color)
                         bind.sampleWdt.profileOut.setTextColor(color)
                     }
                 }
@@ -431,6 +444,7 @@ class BatteryDialogActivity : ScopedAppActivity()
                 bind.showCurrentChk.isChecked = sp.getBoolean(swidgetId + WIDGET_SCURRENT, true)
                 bind.showTemperatureChk.isChecked = sp.getBoolean(swidgetId + WIDGET_STEMP, true)
                 bind.showVoltageChk.isChecked = sp.getBoolean(swidgetId + WIDGET_SVOLT, true)
+                bind.showPowerChk.isChecked = sp.getBoolean(swidgetId + WIDGET_SPOWER, true)
                 bind.showProfileChk.isChecked = sp.getBoolean(swidgetId + WIDGET_SPROFILE, true)
 
             }.show()

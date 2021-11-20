@@ -37,6 +37,7 @@
     <string name="info_discharging_speed">Current Now:</string>
     <string name="info_capacity">Capacity:</string>
     <string name="info_temperature">Temperature:</string>
+    <string name="info_power">Power:</string>
     <string name="info_health">Health:</string>
     <string name="info_profile">Profile:</string>
 
@@ -480,6 +481,7 @@
     <string name="swd_show_curr">Show current</string>
     <string name="swd_show_temp">Show temperature</string>
     <string name="swd_show_volt">Show Voltage</string>
+    <string name="swd_show_power">Show Power</string>
     <string name="swd_show_profile">Show profile</string>
 
 </resources>

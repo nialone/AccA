@@ -54,6 +54,7 @@ const val WIDGET_SSTATUS = "_sstatus"
 const val WIDGET_SCURRENT = "_scurrent"
 const val WIDGET_STEMP = "_stemp"
 const val WIDGET_SVOLT = "_svolt"
+const val WIDGET_SPOWER = "_spower"
 const val WIDGET_SPROFILE = "_sprofile"
 
 class BatteryInfoWidget : AppWidgetProvider()
@@ -250,6 +251,13 @@ class BatteryInfoWidget : AppWidgetProvider()
                 widgetView.setTextViewTextSize(R.id.voltage_out, COMPLEX_UNIT_SP, textSize.toFloat())
                 widgetView.setTextColor(R.id.voltage_label, textColor)
                 widgetView.setTextColor(R.id.voltage_out, textColor)
+
+                widgetView.setTextViewText(R.id.power_label, if (replaceLabel) "Ⓦ:" else context.getString(R.string.info_power))
+                widgetView.setTextViewText(R.id.power_out,  batteryInfo.getPowerNow(showEndvalue))
+                widgetView.setTextViewTextSize(R.id.power_label, COMPLEX_UNIT_SP, textSize.toFloat())
+                widgetView.setTextViewTextSize(R.id.power_out, COMPLEX_UNIT_SP, textSize.toFloat())
+                widgetView.setTextColor(R.id.power_label, textColor)
+                widgetView.setTextColor(R.id.power_out, textColor)
 
                 widgetView.setTextViewText(R.id.profile_label, if (replaceLabel) "Ⓟ:" else context.getString(R.string.info_profile))
                 widgetView.setTextViewText(R.id.profile_out, getCurrentProfile(context))

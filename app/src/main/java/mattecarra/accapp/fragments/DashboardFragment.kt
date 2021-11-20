@@ -88,6 +88,7 @@ class DashboardFragment : ScopedFragment()
             val plus = if (Acc.instance.version < 202107280) dash.batteryInfo.isCharging() else true
             binding.dashChargingSpeedTextView.text = dash.batteryInfo.getCurrentNow(preferences.currentInputUnitOfMeasure, preferences.currentOutputUnitOfMeasure, plus, true)
 
+            binding.dashBatteryPowerTextView.text = dash.batteryInfo.getPowerNow(true)
             binding.dashBatteryTemperatureTextView.text = dash.batteryInfo.getTemperature(preferences.temperatureOutputUnitOfMeasure, true)
             binding.dashBatteryHealthTextView.text = dash.batteryInfo.health
             binding.dashBatteryVoltageTextView.text = dash.batteryInfo.getVoltageNow(preferences.voltageInputUnitOfMeasure, preferences.voltageOutputUnitOfMeasure, true)

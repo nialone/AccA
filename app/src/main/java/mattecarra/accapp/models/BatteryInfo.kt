@@ -122,6 +122,11 @@ class BatteryInfo(val name: String,
         else (getCurrentNow(input) * rmd).toInt().toString() + if (withMeaUnit) " mA" else ""
     }
 
+    fun getPowerNow(withMeaUnit: Boolean): String
+    {
+        return String.format("%.2f", powerNow) + if (withMeaUnit) " W" else ""
+    }
+
     //------------------------------------------------------
     // with Round to one decimal places
 

@@ -209,18 +209,25 @@
             android:text="@string/swd_show_curr" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/show_temperature_chk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/swd_show_temp" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/show_voltage_chk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/swd_show_volt" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_power_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_power" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_temperature_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_temp" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/show_profile_chk"

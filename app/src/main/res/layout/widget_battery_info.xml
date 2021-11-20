@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/widget_bgd" />
+        android:src="@drawable/widget_bgd"
+        tools:visibility="gone" />
 
     <ImageView
         android:id="@+id/battery_icon"
@@ -19,7 +20,8 @@
         android:scaleType="center"
         android:src="@mipmap/ic_launcher_round"
         android:visibility="visible"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/battery_info_ll"
@@ -29,7 +31,7 @@
         android:orientation="vertical"
         android:visibility="invisible">
 
-        <!-- Battery Charging Status -->
+        <!-- Battery Status -->
         <LinearLayout
             android:id="@+id/status_line"
             android:layout_width="match_parent"
@@ -85,34 +87,6 @@
 
         </LinearLayout>
 
-        <!-- Battery Temperature -->
-        <LinearLayout
-            android:id="@+id/temper_line"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/temper_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:paddingEnd="@dimen/card_margindiv2"
-                android:paddingRight="@dimen/card_margindiv2"
-                android:singleLine="true"
-                android:text="@string/info_temperature" />
-
-            <TextView
-                android:id="@+id/temper_out"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:singleLine="true"
-                android:text="..."
-                tools:text="@tools:sample/lorem" />
-
-        </LinearLayout>
-
         <!-- Battery Voltage -->
         <LinearLayout
             android:id="@+id/voltage_line"
@@ -138,6 +112,62 @@
                 android:singleLine="true"
                 android:text="..."
                 tools:text="@tools:sample/cities" />
+
+        </LinearLayout>
+
+        <!-- Battery Power -->
+        <LinearLayout
+            android:id="@+id/power_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/power_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="@dimen/card_margindiv2"
+                android:paddingRight="@dimen/card_margindiv2"
+                android:singleLine="true"
+                android:text="@string/info_power" />
+
+            <TextView
+                android:id="@+id/power_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:singleLine="true"
+                android:text="..."
+                tools:text="@tools:sample/lorem" />
+
+        </LinearLayout>
+
+        <!-- Battery Temperature -->
+        <LinearLayout
+            android:id="@+id/temper_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/temper_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="@dimen/card_margindiv2"
+                android:paddingRight="@dimen/card_margindiv2"
+                android:singleLine="true"
+                android:text="@string/info_temperature" />
+
+            <TextView
+                android:id="@+id/temper_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:singleLine="true"
+                android:text="..."
+                tools:text="@tools:sample/lorem" />
 
         </LinearLayout>
 

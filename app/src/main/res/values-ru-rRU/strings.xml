@@ -31,6 +31,7 @@
     <string name="info_capacity">Ёмкость:</string>
     <string name="info_temperature">Температура:</string>
     <string name="info_voltage">Напряжение:</string>
+    <string name="info_power">Мощность:</string>
     <string name="info_health">Здоровье:</string>
     <string name="info_profile">Профиль:</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
@@ -376,6 +377,7 @@
     <string name="swd_show_curr">Показывать ток</string>
     <string name="swd_show_temp">Показывать температуру</string>
     <string name="swd_show_volt">Показывать напряжение</string>
+    <string name="swd_show_power">Показывать мощность</string>
     <string name="swd_show_profile">Показывать профиль</string>
 
 </resources>
