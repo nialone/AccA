@@ -86,6 +86,10 @@ class BatteryInfo(val name: String,
     fun getRawVoltageNow(): Float = voltageNow
     fun getRawCurrentNow(): Float = currentNow
 
+    fun fixSFloat(inp: String): Float = inp.replace(",",".", true).toFloat()
+
+    //------------------------------------------------------
+
     /**
      * Returns voltage now as float.
      * @return current battery operating voltage in V.
@@ -93,16 +97,18 @@ class BatteryInfo(val name: String,
     fun getVoltageNow(unit: VoltageUnit): Float
     {
         return if (voltageNow <= 0f) voltageNow
-        else if (unit == VoltageUnit.uV) String.format("%.3f", voltageNow / 1000000f).toFloat()
-        else if (unit == VoltageUnit.V) String.format("%.3f", voltageNow / 1000f).toFloat()
-        else voltageNow // mV without '.'
+        else if (unit == VoltageUnit.uV) fixSFloat(String.format("%.3f", voltageNow / 1000000))
+        else if (unit == VoltageUnit.mV) fixSFloat(String.format("%.3f", voltageNow / 1000))
+        else fixSFloat(String.format("%.2f", voltageNow)) // only out
     }
 
     fun getVoltageNow(input: VoltageUnit, output: VoltageUnit, withMeaUnit: Boolean): String
     {
-        return if (output == VoltageUnit.V) { String.format("%.3f",getVoltageNow(input)) + if (withMeaUnit) " V" else "" }
-        else (getVoltageNow(input) * 1000f).toInt().toString() + if (withMeaUnit) " mV" else ""
+        return if (output == VoltageUnit.V) { getVoltageNow(input).toString() + if (withMeaUnit) " V" else "" }
+        else (getVoltageNow(input) * 1000).toInt().toString() + if (withMeaUnit) " mV" else ""
     }
+
+    //------------------------------------------------------
 
     /**
      * Returns inverted, friendly value for CURRENT_NOW expressed in mAh
@@ -110,7 +116,7 @@ class BatteryInfo(val name: String,
      */
     fun getCurrentNow(unit: CurrentUnit): Float
     {
-        return if (unit == CurrentUnit.uA) (currentNow / 1000f)
+        return if (unit == CurrentUnit.uA) (currentNow / 1000)
         else if(unit == CurrentUnit.mA) currentNow
         else (currentNow * 1000) // CurrentUnit.A --> mA !!
     }
@@ -118,9 +124,11 @@ class BatteryInfo(val name: String,
     fun getCurrentNow(input: CurrentUnit, output: CurrentUnit, positive: Boolean, withMeaUnit: Boolean): String
     {
         val rmd = if (positive) 1 else -1
-        return if (output == CurrentUnit.A) { String.format("%.3f", getCurrentNow(input) / 1000f * rmd) + if (withMeaUnit) " A" else "" }
+        return if (output == CurrentUnit.A) { String.format("%.3f", getCurrentNow(input) / 1000 * rmd) + if (withMeaUnit) " A" else "" }
         else (getCurrentNow(input) * rmd).toInt().toString() + if (withMeaUnit) " mA" else ""
     }
+
+    //------------------------------------------------------
 
     fun getPowerNow(withMeaUnit: Boolean): String
     {
@@ -132,9 +140,8 @@ class BatteryInfo(val name: String,
 
     fun getTemperature(unit: TemperatureUnit): Float
     {
-        val temp = String.format("%.1f", temperature * 1.8 + 32).replace(",",".", true)
         return if (unit == TemperatureUnit.C) temperature.toFloat() // BAG IN FORMAT() ",." !!
-        else temp.toFloat() // TemperatureUnit.F
+        else fixSFloat(String.format("%.1f", temperature * 1.8 + 32)) // TemperatureUnit.F
     }
 
     fun getTemperature(unit: TemperatureUnit, withMeaUnit: Boolean): String
