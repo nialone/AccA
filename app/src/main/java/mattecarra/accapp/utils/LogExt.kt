@@ -24,6 +24,11 @@ class LogExt
         log("S", tag, message)
     }
 
+    fun v(tag: String, message: String)
+    {
+        log("V", tag, message)
+    }
+
     fun d(tag: String, message: String)
     {
         log("D", tag, message)
@@ -46,6 +51,7 @@ class LogExt
 
         when(level)
         {
+            "V" -> Log.v("AccA:$tag", message)
             "D","S" -> Log.d("AccA:$tag", message)
             "W" -> Log.w("AccA:$tag", message)
             "E" -> Log.e("AccA:$tag", message)

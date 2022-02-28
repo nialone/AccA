@@ -25,7 +25,8 @@ import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
 
-class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener  {
+class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
+{
     private lateinit var mContext: Context
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mSharedViewModel: SharedViewModel
@@ -67,7 +68,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        LogExt().d(javaClass.simpleName,"onViewCreated()")
+        LogExt().v(javaClass.simpleName,"onViewCreated()->checkProfile()")
         super.onViewCreated(view, savedInstanceState)
 
         binding.itemProfileLoadImage.visibility = View.VISIBLE;
@@ -94,6 +95,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
     private fun startAccConfigEditorActivity()
     {
+        LogExt().d(javaClass.simpleName,"startAccConfigEditorActivity()")
         startActivityForResult(Intent(context, AccConfigEditorActivity::class.java), 7)
     }
 
@@ -114,7 +116,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
     fun updateInfo(nameTitle: String, accConfig: AccConfig)
     {
-        LogExt().d(javaClass.simpleName, "updateInfo(): name=$nameTitle , accConfig=$accConfig")
+        LogExt().d(javaClass.simpleName, "updateInfo(): name=$nameTitle, accConfig=$accConfig")
 
         binding.itemProfileTitleTextView.text = nameTitle
         binding.itemProfileCapacityTv.text = accConfig.configCapacity.toString(mContext)
@@ -168,6 +170,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)
     {
+        LogExt().d(javaClass.simpleName,"onSharedPreferenceChanged($key)")
         if (key == Constants.PROFILE_KEY) checkProfile()
     }
 }

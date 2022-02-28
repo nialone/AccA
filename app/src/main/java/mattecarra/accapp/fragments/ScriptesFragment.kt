@@ -54,7 +54,7 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        LogExt().d(javaClass.simpleName, "onViewCreated()")
+        LogExt().v(javaClass.simpleName, "onViewCreated()")
 
         val binding = ScriptsFragmentBinding.bind(view)
 

@@ -66,6 +66,8 @@ class ProfilesFragment : ScopedFragment(),
 
         if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
         {
+            LogExt().d(javaClass.simpleName, "onActivityResult()=HasChanges!..")
+
             launch {
 
                 val uid = data.getIntExtra(Constants.PROFILE_ID_KEY, -1) as Int
@@ -85,7 +87,7 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        LogExt().d(javaClass.simpleName, "onViewCreated()")
+        LogExt().v(javaClass.simpleName, "onViewCreated()->ObserverProfiles()")
 
         val binding = ProfilesFragmentBinding.bind(view)
         val profilesRecycler = binding.profileRecyclerView
@@ -235,6 +237,8 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)
     {
+        LogExt().d(javaClass.simpleName,"onSharedPreferenceChanged($key)")
+
         if (key == Constants.PROFILE_KEY)
         {
             launch {
@@ -270,10 +274,13 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun onProfileLongClick(profile: AccaProfile)
     {
+        LogExt().d(javaClass.simpleName,"onProfileLongClick(${profile.uid})")
     }
 
     override fun editProfile(profile: AccaProfile)
     {
+        LogExt().d(javaClass.simpleName,"editProfile(${profile.uid})")
+
         // Edit the configuration of the selected profile.
         startActivityForResult(Intent(mContext, AccConfigEditorActivity::class.java)
             .putExtra(Constants.PROFILE_ID_KEY, profile.uid)
@@ -283,6 +290,8 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun renameProfile(profile: AccaProfile)
     {
+        LogExt().d(javaClass.simpleName,"renameProfile(${profile.uid})")
+
         // Rename the selected profile (2nd option).
         MaterialDialog(mContext).show {
                 title(R.string.profile_name)
@@ -300,6 +309,7 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun deleteProfile(profile: AccaProfile)
     {
+        LogExt().d(javaClass.simpleName,"deleteProfile(${profile.uid})")
         // Delete the selected profile (3rd option).
         mProfilesViewModel.deleteProfile(profile)
     }

@@ -62,7 +62,7 @@ class DashboardFragment : ScopedFragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        LogExt().d(javaClass.simpleName, "onViewCreated()")
+        LogExt().v(javaClass.simpleName, "onViewCreated()")
 
         super.onViewCreated(view, savedInstanceState)
 
@@ -100,10 +100,12 @@ class DashboardFragment : ScopedFragment()
             configViewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
 
             binding.dashResetBatteryStatsButton.setOnClickListener {
+                LogExt().d(javaClass.simpleName, "Click ResetBatteryStats")
                 launch { Acc.instance.resetBatteryStats() }
             }
 
             binding.dashEditCargingLimitOnceButton.setOnClickListener {
+                LogExt().d(javaClass.simpleName, "Click ChargingLimitOnce")
                 val dialog = EditChargingLimitOnceDialogBinding.inflate(layoutInflater)
                 MaterialDialog(it.context).show {
                     title(R.string.edit_charging_limit_once_button)
@@ -115,11 +117,13 @@ class DashboardFragment : ScopedFragment()
                             val limit = getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value
                             Acc.instance.setChargingLimitForOneCharge(limit)
                             Toast.makeText(context, getString(R.string.done_applied_charge_limit, limit), Toast.LENGTH_LONG).show()
+                            LogExt().d(javaClass.simpleName, "Apply charging to $limit")
                         }
                     }
                     negativeButton(android.R.string.cancel) {
                         launch {
                             Toast.makeText(context, R.string.charge_limit_not_applied, Toast.LENGTH_LONG).show()
+                            LogExt().d(javaClass.simpleName, "Apply charge limit canceled")
                         }
                     }
                 }
@@ -133,6 +137,7 @@ class DashboardFragment : ScopedFragment()
 
         binding.dashDaemonToggleButton.setOnClickListener {
             Toast.makeText(context, R.string.wait, Toast.LENGTH_LONG).show()
+            LogExt().d(javaClass.simpleName, "Click DaemonToggle")
 
             launch {
                 val finished = AtomicBoolean(false)
@@ -172,6 +177,7 @@ class DashboardFragment : ScopedFragment()
 
         binding.dashDaemonRestartButton.setOnClickListener {
             Toast.makeText(context, R.string.wait, Toast.LENGTH_LONG).show()
+            LogExt().d(javaClass.simpleName, "Click DaemonRestartButton")
 
             binding.dashDaemonToggleButton.isEnabled = false
             binding.dashDaemonRestartButton.isEnabled = false
@@ -218,6 +224,7 @@ class DashboardFragment : ScopedFragment()
 
     private fun setAccdStatusUi(running: Boolean?)
     {
+        LogExt().v(javaClass.simpleName, "setAccdStatusUi(running=$running)")
         if (running == null) return
 
         if (running)
