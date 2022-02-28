@@ -264,6 +264,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                 intent.putExtra(Constants.TITLE_KEY, this@MainActivity.getString(R.string.profile_creator))
                 intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.readDefaultConfig())
+                intent.putExtra(Constants.PROFILE_KEY, true)
                 startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
             }
         }

@@ -85,6 +85,8 @@ class AccConfigEditorActivity : ScopedAppActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        val newProfile = intent.getBooleanExtra(Constants.PROFILE_KEY, false)
+
         val profile = when // load profile from intent
         {
             savedInstanceState?.containsKey(Constants.PROFILE_CONFIG_KEY) == true ->
@@ -95,7 +97,7 @@ class AccConfigEditorActivity : ScopedAppActivity(),
 
             else ->
             {
-                accConfigOnly = true
+                accConfigOnly = !newProfile
                 AccaProfile(-1,"", AccConfig(), ProfileEnables())
             }
         }
